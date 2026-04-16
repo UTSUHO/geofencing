@@ -34,7 +34,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   geofencing_service: ^1.0.0
   flutter_local_notifications: ^17.2.1
-  google_maps_flutter: ^2.7.0
+  amap_map: ^1.0.15
+  x_amap_base: ^1.0.3
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   flutter_riverpod: ^2.5.1

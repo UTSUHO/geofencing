@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:amap_map/amap_map.dart';
+import 'package:x_amap_base/x_amap_base.dart';
 
 class MapPickerScreen extends StatefulWidget {
   final LatLng? initialLocation;
@@ -44,7 +45,7 @@ class _MapPickerScreenState extends State<MapPickerScreen> {
           ),
         ],
       ),
-      body: GoogleMap(
+      body: AMapWidget(
         initialCameraPosition: CameraPosition(
           target: _selectedLocation!,
           zoom: 15,
@@ -53,13 +54,10 @@ class _MapPickerScreenState extends State<MapPickerScreen> {
             ? {}
             : {
                 Marker(
-                  markerId: const MarkerId('picked'),
                   position: _selectedLocation!,
                 ),
               },
         onTap: _onMapTap,
-        myLocationEnabled: true,
-        myLocationButtonEnabled: true,
       ),
     );
   }

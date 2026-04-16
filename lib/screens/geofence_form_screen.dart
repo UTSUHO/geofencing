@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:amap_map/amap_map.dart';
+import 'package:x_amap_base/x_amap_base.dart';
 import 'package:uuid/uuid.dart';
 
 import '../models/geofence_model.dart';
@@ -143,22 +146,22 @@ class _GeofenceFormScreenState extends ConsumerState<GeofenceFormScreen> {
               Expanded(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: GoogleMap(
+                  child: AMapWidget(
                     initialCameraPosition: CameraPosition(
                       target: _selectedLocation!,
                       zoom: 15,
                     ),
                     markers: {
                       Marker(
-                        markerId: const MarkerId('selected'),
                         position: _selectedLocation!,
                       ),
                     },
-                    circles: {
-                      Circle(
-                        circleId: const CircleId('radius'),
-                        center: _selectedLocation!,
-                        radius: _radius,
+                    polygons: {
+                      Polygon(
+                        points: _createCirclePoints(
+                          _selectedLocation!,
+                          _radius,
+                        ),
                         fillColor: Colors.blue.withValues(alpha: 0.2),
                         strokeColor: Colors.blue,
                         strokeWidth: 2,
@@ -177,5 +180,19 @@ class _GeofenceFormScreenState extends ConsumerState<GeofenceFormScreen> {
         ),
       ),
     );
+  }
+
+  List<LatLng> _createCirclePoints(LatLng center, double radius) {
+    const int pointsCount = 64;
+    final List<LatLng> points = [];
+    for (int i = 0; i < pointsCount; i++) {
+      final double angle = 2 * 3.141592653589793 * i / pointsCount;
+      final double dx = radius * cos(angle);
+      final double dy = radius * sin(angle);
+      final double dLat = dy / 111320.0;
+      final double dLng = dx / (111320.0 * cos(center.latitude * 3.141592653589793 / 180.0));
+      points.add(LatLng(center.latitude + dLat, center.longitude + dLng));
+    }
+    return points;
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:x_amap_base/x_amap_base.dart';
 
 import '../data/geofence_repository.dart';
 import '../models/geofence_model.dart';

@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter pub:*)",
+      "Bash(flutter analyze:*)",
+      "Bash(adb kill-server:*)",
+      "Bash(adb start-server:*)",
+      "Read(//c/Users/abyss raven/.gradle/caches/**)",
+      "Bash(jar tf:*)",
+      "Bash(grep -E \"\\\\.so$|jni\")"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\abyss raven\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\amap_map-1.0.15\\android\\src\\main",
+      "C:\\Users\\abyss raven\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\amap_map-1.0.15\\android"
+    ]
+  }
+}
