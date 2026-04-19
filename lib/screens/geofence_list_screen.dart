@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/geofence_list_provider.dart';
+import '../services/notification_service.dart';
+import '../services/permission_service.dart';
 import 'geofence_form_screen.dart';
 
 class GeofenceListScreen extends ConsumerWidget {
@@ -15,6 +19,39 @@ class GeofenceListScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Geo-fences'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_active),
+            tooltip: 'Test Notification',
+            onPressed: () async {
+              log('Test notification button pressed');
+              try {
+                final hasNotif = await PermissionService.hasNotificationPermission;
+                log('Notification permission status: $hasNotif');
+                if (!hasNotif) {
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Notification permission denied. Please enable it in settings.')),
+                    );
+                  }
+                  return;
+                }
+                await NotificationService().showGeofenceEntryNotification('Test');
+                log('showGeofenceEntryNotification completed');
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Test notification sent')),
+                  );
+                }
+              } catch (e, st) {
+                log('Test notification error', error: e, stackTrace: st);
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error: $e')),
+                  );
+                }
+              }
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () async {

@@ -50,7 +50,9 @@ class GeofencingServiceManager {
         ? activeGeofences.sublist(0, GeofencingManager.maxGeofences)
         : activeGeofences;
 
+    log('Registering ${limitedGeofences.length} geofences with OS');
     for (final geofence in limitedGeofences) {
+      log('Register geofence: id=${geofence.id} lat=${geofence.latitude} lng=${geofence.longitude} radius=${geofence.radius}m');
       await GeofencingManager.registerGeofence(
         GeofenceRegion(
           geofence.id,

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:x_amap_base/x_amap_base.dart';
 
@@ -49,6 +51,7 @@ class GeofenceListNotifier extends AsyncNotifier<List<GeofenceModel>> {
     final repo = ref.read(geofenceRepositoryProvider);
     final list = repo.getAll();
     state = AsyncData(list);
+    log('Syncing ${list.length} geofences to OS (enabled: ${list.where((g) => g.isEnabled).length})');
     await GeofencingServiceManager().registerGeofences(list);
   }
 }
